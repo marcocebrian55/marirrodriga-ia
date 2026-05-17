@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marirrodriga.IA — Automatización · Desarrollo Web · Inteligencia Artificial</title>
+  <meta name="description" content="Hacemos que tu empresa trabaje sola. De verdad. Automatizamos, construimos y conectamos inteligencia artificial a tu negocio." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #fff; color: #111827; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+    /* NAV */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 48px; border-bottom: 1px solid #f3f4f6; position: sticky; top: 0; background: rgba(255,255,255,.97); backdrop-filter: blur(12px); z-index: 100; }
+    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-svg { width: 36px; height: 36px; flex-shrink: 0; }
+    .logo-text { font-size: 16px; font-weight: 800; letter-spacing: -.5px; color: #111827; }
+    .logo-text b { color: #7c6eec; }
+    .nl { display: flex; gap: 4px; }
+    .nl a { font-size: 13px; color: #6b7280; text-decoration: none; padding: 6px 12px; border-radius: 7px; transition: all .2s; cursor: pointer; }
+    .nl a:hover, .nl a.on { color: #7c6eec; background: #f5f3ff; }
+    .nb { background: #7c6eec; color: #fff; border: none; padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s; }
+    .nb:hover { background: #6d5fd4; }
+
+    /* PAGES */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero { padding: 80px 48px 60px; position: relative; overflow: hidden; text-align: center; display: flex; flex-direction: column; align-items: center; background: #fafafa; }
+    .hgrid { position: absolute; inset: 0; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 40px 40px; opacity: .5; }
+    .hglow { position: absolute; width: 600px; height: 300px; top: -60px; left: 50%; transform: translateX(-50%); background: radial-gradient(ellipse, rgba(124,110,236,.08) 0%, transparent 70%); border-radius: 50%; }
+    .nodes { position: absolute; inset: 0; pointer-events: none; }
+    .node { position: absolute; border-radius: 50%; background: #7c6eec; animation: floatNode linear infinite; }
+    @keyframes floatNode { 0%,100% { transform: translateY(0); opacity: .12; } 50% { transform: translateY(-20px); opacity: .28; } }
+    .badge { display: inline-flex; align-items: center; gap: 7px; background: #f5f3ff; border: 1px solid #ddd6fe; padding: 5px 16px; border-radius: 100px; font-size: 12px; color: #7c6eec; margin-bottom: 26px; position: relative; font-weight: 600; }
+    .bdot { width: 6px; height: 6px; background: #7c6eec; border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .3; transform: scale(.6); } }
+    .hero h1 { font-size: 52px; font-weight: 900; line-height: 1.08; letter-spacing: -2.5px; position: relative; margin-bottom: 20px; max-width: 680px; color: #111827; }
+    .hero h1 em { font-style: normal; color: #7c6eec; }
+    .hero .sub { font-size: 16px; color: #6b7280; max-width: 540px; line-height: 1.8; position: relative; margin-bottom: 34px; }
+    .hbtns { display: flex; gap: 12px; position: relative; flex-wrap: wrap; justify-content: center; }
+    .hb1 { background: #7c6eec; color: #fff; padding: 13px 26px; border-radius: 8px; font-size: 15px; font-weight: 700; border: none; cursor: pointer; transition: all .2s; box-shadow: 0 4px 14px rgba(124,110,236,.3); }
+    .hb1:hover { background: #6d5fd4; transform: translateY(-2px); }
+    .hb2 { background: #fff; color: #374151; padding: 13px 26px; border-radius: 8px; font-size: 15px; border: 1px solid #e5e7eb; cursor: pointer; transition: all .2s; }
+    .hb2:hover { background: #f9fafb; }
+    .hstats { display: flex; margin-top: 50px; position: relative; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.05); width: 100%; max-width: 640px; }
+    .hs { flex: 1; padding: 18px 20px; text-align: center; }
+    .hs + .hs { border-left: 1px solid #f3f4f6; }
+    .hn { font-size: 22px; font-weight: 800; color: #111827; }
+    .hn b { color: #7c6eec; }
+    .hl { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+
+    /* SECTIONS */
+    section { padding: 64px 48px; border-top: 1px solid #f3f4f6; }
+    .stitle { margin-bottom: 40px; }
+    .stitle.center { text-align: center; }
+    .slbl { font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: #7c6eec; font-weight: 700; margin-bottom: 10px; }
+    .stitle h2 { font-size: 30px; font-weight: 800; letter-spacing: -.8px; line-height: 1.2; color: #111827; }
+    .stitle p { font-size: 14px; color: #6b7280; margin-top: 10px; line-height: 1.75; }
+    .stitle.center p { max-width: 520px; margin-left: auto; margin-right: auto; }
+
+    /* CASO REAL */
+    .case { background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,.05); }
+    .case-top { background: #f5f3ff; padding: 20px 28px; border-bottom: 1px solid #ede9fe; display: flex; align-items: center; gap: 14px; }
+    .case-ico { width: 48px; height: 48px; background: #ede9fe; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .case-top h3 { font-size: 15px; font-weight: 800; color: #111827; }
+    .case-top p { font-size: 12px; color: #6b7280; margin-top: 3px; }
+    .case-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .ccol { padding: 22px 26px; }
+    .ccol + .ccol { border-left: 1px solid #f3f4f6; }
+    .ccol h4 { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #9ca3af; font-weight: 700; margin-bottom: 12px; }
+    .ccol p { font-size: 13px; color: #4b5563; line-height: 1.75; }
+    .ccol p em { color: #111827; font-style: normal; font-weight: 600; }
+    .rpill { display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 4px 12px; border-radius: 100px; font-size: 12px; color: #16a34a; margin-bottom: 10px; font-weight: 700; }
+
+    /* PROCESO */
+    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+    .steps::before { content: ''; position: absolute; top: 32px; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, #ddd6fe, #ddd6fe, transparent); }
+    .step { text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+    .stepn { width: 64px; height: 64px; border-radius: 50%; background: #fff; border: 2px solid #ede9fe; display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 16px; position: relative; box-shadow: 0 2px 8px rgba(124,110,236,.1); }
+    .stepnum { position: absolute; top: -4px; right: -4px; width: 20px; height: 20px; background: #7c6eec; border-radius: 50%; font-size: 10px; font-weight: 800; color: #fff; display: flex; align-items: center; justify-content: center; }
+    .step h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: #111827; }
+    .step p { font-size: 12px; color: #6b7280; line-height: 1.65; }
+
+    /* POR QUÉ */
+    .whygrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+    .wycard { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 22px; transition: all .2s; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .wycard:hover { border-color: #c4b5fd; box-shadow: 0 4px 16px rgba(124,110,236,.1); }
+    .wyico { font-size: 24px; margin-bottom: 12px; }
+    .wycard h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: #111827; }
+    .wycard p { font-size: 12px; color: #6b7280; line-height: 1.7; }
+
+    /* TESTIMONIO */
+    .tst { background: #f5f3ff; border: 1px solid #ede9fe; border-radius: 12px; padding: 24px 28px; }
+    .stars { color: #f59e0b; font-size: 14px; margin-bottom: 12px; letter-spacing: 2px; }
+    .tst blockquote { font-size: 14px; color: #374151; line-height: 1.8; font-style: italic; margin-bottom: 16px; }
+    .tst blockquote::before { content: '\201C'; color: #7c6eec; font-size: 24px; line-height: 0; vertical-align: -.5em; margin-right: 3px; }
+    .tst blockquote::after { content: '\201D'; color: #7c6eec; font-size: 24px; line-height: 0; vertical-align: -.5em; margin-left: 3px; }
+    .tauth { display: flex; align-items: center; gap: 12px; }
+    .tava { width: 36px; height: 36px; border-radius: 50%; background: #ede9fe; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #7c6eec; flex-shrink: 0; }
+    .taname { font-size: 13px; font-weight: 700; color: #111827; }
+    .taco { font-size: 11px; color: #9ca3af; }
+
+    /* EQUIPO */
+    .teamgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .tcard { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; display: flex; gap: 16px; transition: all .2s; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .tcard:hover { border-color: #c4b5fd; box-shadow: 0 4px 16px rgba(124,110,236,.1); }
+    .tav-big { width: 56px; height: 56px; border-radius: 50%; background: #f5f3ff; border: 2px solid #ddd6fe; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #7c6eec; flex-shrink: 0; }
+    .tinfo h3 { font-size: 15px; font-weight: 800; margin-bottom: 3px; color: #111827; }
+    .trole { font-size: 12px; color: #7c6eec; margin-bottom: 9px; font-weight: 600; }
+    .tdesc { font-size: 12px; color: #6b7280; line-height: 1.72; }
+    .ttags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+    .tt { font-size: 10px; background: #f5f3ff; border: 1px solid #ddd6fe; color: #7c6eec; padding: 3px 10px; border-radius: 100px; }
+
+    /* CTA */
+    .ctasec { padding: 80px 48px; text-align: center; border-top: 1px solid #f3f4f6; background: linear-gradient(135deg, #faf9ff, #f5f3ff); position: relative; overflow: hidden; }
+    .ctasec h2 { font-size: 36px; font-weight: 900; letter-spacing: -1.2px; margin-bottom: 14px; color: #111827; line-height: 1.15; }
+    .ctasec h2 em { font-style: normal; color: #7c6eec; }
+    .ctasec p { font-size: 15px; color: #6b7280; margin-bottom: 30px; line-height: 1.8; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .ctabig { background: #7c6eec; color: #fff; border: none; padding: 15px 34px; border-radius: 9px; font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 18px rgba(124,110,236,.35); transition: all .2s; }
+    .ctabig:hover { background: #6d5fd4; transform: translateY(-2px); }
+    .ctasub { font-size: 12px; color: #9ca3af; margin-top: 14px; }
+
+    /* FOOTER */
+    footer { background: #111827; color: #9ca3af; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .footer-logo { display: flex; align-items: center; gap: 10px; }
+    .footer-logo-text { font-size: 15px; font-weight: 800; color: #fff; }
+    .footer-logo-text b { color: #7c6eec; }
+    .footer-tagline { font-size: 12px; color: #6b7280; margin-top: 3px; }
+    .footer-links { display: flex; gap: 20px; font-size: 12px; }
+    .footer-links a { color: #6b7280; text-decoration: none; transition: color .2s; cursor: pointer; }
+    .footer-links a:hover { color: #a89cf7; }
+    .footer-copy { font-size: 11px; color: #4b5563; }
+
+    /* SERVICIOS */
+    .svcs-hero { padding: 60px 48px 44px; position: relative; overflow: hidden; border-bottom: 1px solid #f3f4f6; background: #fafafa; }
+    .svcs-hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px); background-size: 40px 40px; opacity: .4; }
+    .svcs-hero h1 { font-size: 38px; font-weight: 900; letter-spacing: -1.2px; margin-bottom: 14px; position: relative; color: #111827; }
+    .svcs-hero h1 em { font-style: normal; color: #7c6eec; }
+    .svcs-hero p { font-size: 15px; color: #6b7280; max-width: 560px; line-height: 1.8; position: relative; }
+    .svc-note { display: inline-flex; align-items: center; gap: 7px; background: #f5f3ff; border: 1px solid #ddd6fe; padding: 5px 14px; border-radius: 100px; font-size: 12px; color: #7c6eec; margin-bottom: 18px; position: relative; font-weight: 600; }
+    .sgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .sc { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; transition: all .2s; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+    .sc:hover { border-color: #c4b5fd; box-shadow: 0 4px 16px rgba(124,110,236,.1); }
+    .sch { padding: 18px 18px 0; display: flex; align-items: flex-start; gap: 12px; }
+    .sci { width: 38px; height: 38px; border-radius: 9px; background: #f5f3ff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .scinfo h3 { font-size: 14px; font-weight: 700; margin-bottom: 3px; color: #111827; }
+    .scinfo p { font-size: 12px; color: #6b7280; line-height: 1.55; }
+    .scdemo { margin: 14px 16px 16px; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 9px; overflow: hidden; }
+    .sdtop { display: flex; align-items: center; gap: 7px; padding: 9px 12px; background: #f5f3ff; border-bottom: 1px solid #ede9fe; }
+    .sdtop span { font-size: 11px; color: #7c6eec; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+    .sdlive { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; flex-shrink: 0; animation: pulse 1.5s infinite; }
+    .chatbox { height: 130px; overflow-y: auto; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+    .msg { max-width: 82%; padding: 7px 12px; border-radius: 9px; font-size: 12px; line-height: 1.55; }
+    .msg.bot { background: #f5f3ff; color: #374151; align-self: flex-start; border-radius: 2px 9px 9px 9px; border: 1px solid #ede9fe; }
+    .msg.usr { background: #7c6eec; color: #fff; align-self: flex-end; border-radius: 9px 2px 9px 9px; }
+    .cinput { display: flex; border-top: 1px solid #e5e7eb; }
+    .cinput input { flex: 1; background: transparent; border: none; padding: 9px 12px; font-size: 12px; color: #111827; outline: none; }
+    .cinput input::placeholder { color: #9ca3af; }
+    .cinput button { background: #7c6eec; border: none; padding: 9px 14px; color: #fff; font-size: 12px; cursor: pointer; font-weight: 700; }
+    .emailbox { padding: 12px; }
+    .eline { font-size: 12px; color: #6b7280; padding: 4px 0; border-bottom: 1px solid #f3f4f6; display: flex; gap: 8px; }
+    .eline b { color: #374151; font-weight: 600; min-width: 40px; }
+    .ebody { margin-top: 10px; font-size: 12px; color: #4b5563; line-height: 1.7; padding: 10px; background: #f9fafb; border-radius: 7px; min-height: 58px; border: 1px solid #f3f4f6; }
+    .cur { display: inline-block; width: 1px; height: 12px; background: #7c6eec; vertical-align: middle; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    .invoicebox { padding: 12px; }
+    .invrow { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; color: #374151; }
+    .invrow.h { color: #9ca3af; font-weight: 600; font-size: 10px; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid #f3f4f6; padding-bottom: 6px; margin-bottom: 4px; }
+    .invrow.t { border-top: 1px solid #ddd6fe; margin-top: 5px; padding-top: 8px; color: #7c6eec; font-weight: 700; }
+    .igbox { padding: 12px; }
+    .igprev { width: 100%; min-height: 90px; background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px; font-size: 12px; color: #9ca3af; text-align: center; position: relative; overflow: hidden; }
+    .igtext { position: absolute; bottom: 8px; left: 8px; right: 8px; font-size: 11px; color: #111827; line-height: 1.4; background: rgba(255,255,255,.88); padding: 6px 8px; border-radius: 6px; text-align: left; }
+    .iginput { display: flex; gap: 7px; margin-top: 10px; }
+    .iginput input { flex: 1; background: #fff; border: 1px solid #e5e7eb; padding: 8px 11px; font-size: 12px; color: #111827; border-radius: 7px; outline: none; }
+    .iginput input::placeholder { color: #9ca3af; }
+    .iginput button { background: #7c6eec; border: none; padding: 8px 14px; color: #fff; font-size: 12px; cursor: pointer; border-radius: 7px; font-weight: 700; white-space: nowrap; }
+    .webbox { padding: 12px; }
+    .wslider { position: relative; height: 80px; border-radius: 8px; overflow: hidden; user-select: none; cursor: ew-resize; border: 1px solid #e5e7eb; }
+    .wbefore { position: absolute; inset: 0; background: #f9fafb; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #9ca3af; text-align: center; line-height: 1.6; }
+    .wafter { position: absolute; inset: 0; background: linear-gradient(135deg, #f5f3ff, #ede9fe); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px; clip-path: inset(0 50% 0 0); transition: clip-path .04s; }
+    .wabar { height: 3px; border-radius: 2px; background: #7c6eec; }
+    .wlbl { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; color: #7c6eec; }
+    .whandle { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 24px; height: 24px; background: #7c6eec; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; cursor: ew-resize; z-index: 2; transition: left .04s; box-shadow: 0 2px 8px rgba(124,110,236,.4); }
+    .winfo { font-size: 11px; color: #9ca3af; text-align: center; margin-top: 7px; }
+    .wfeat { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 9px; justify-content: center; }
+    .wf { font-size: 10px; background: #f5f3ff; border: 1px solid #ddd6fe; color: #7c6eec; padding: 3px 9px; border-radius: 100px; }
+
+    .widget-cta-bar { display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;background:#faf9ff;border-top:1px solid #ede9fe; }
+    .widget-cta-bar span { font-size:11px;color:#6b7280;line-height:1.4; }
+    .widget-cta-btn { display:inline-flex;align-items:center;gap:5px;background:none;color:#7c6eec;border:1.5px solid #7c6eec;padding:6px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0;transition:all .2s; }
+    .widget-cta-btn:hover { background:#7c6eec;color:#fff; }
+    .result-box { background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden; }
+    .result-hdr { background:#f5f3ff;padding:7px 12px;border-bottom:1px solid #ede9fe;font-size:10px;font-weight:700;color:#7c6eec;text-transform:uppercase;letter-spacing:.5px; }
+    .btn-back { background:none;border:1px solid #e5e7eb;padding:5px 11px;border-radius:6px;font-size:11px;color:#6b7280;cursor:pointer;font-family:inherit;margin-top:8px; }
+    .btn-back:hover { background:#f9fafb; }
+    .soc-tab { padding:5px 10px;border-radius:6px;border:1.5px solid #e5e7eb;font-size:11px;cursor:pointer;font-family:inherit;background:#fff;color:#6b7280;font-weight:500;transition:all .2s; }
+    .soc-tab.on { border-color:#7c6eec;background:#f5f3ff;color:#7c6eec;font-weight:700; }
+    .chat-msg { max-width:82%;padding:7px 11px;font-size:12px;line-height:1.55;border-radius:9px; }
+    .chat-msg.bot { background:#f5f3ff;color:#374151;align-self:flex-start;border-radius:2px 9px 9px 9px;border:1px solid #ede9fe; }
+    .chat-msg.user { background:#7c6eec;color:#fff;align-self:flex-end;border-radius:9px 2px 9px 9px; }
+    .chat-typing { background:#f5f3ff;border:1px solid #ede9fe;padding:7px 11px;border-radius:2px 9px 9px 9px;font-size:12px;color:#7c6eec;align-self:flex-start; }
+
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nl { display: none; }
+      .hero { padding: 56px 20px 44px; }
+      .hero h1 { font-size: 34px; }
+      .hstats { flex-direction: column; }
+      .hs + .hs { border-left: none; border-top: 1px solid #f3f4f6; }
+      section { padding: 48px 20px; }
+      .case-cols { grid-template-columns: 1fr; }
+      .ccol + .ccol { border-left: none; border-top: 1px solid #f3f4f6; }
+      .steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .steps::before { display: none; }
+      .whygrid { grid-template-columns: 1fr 1fr; }
+      .teamgrid { grid-template-columns: 1fr; }
+      .tcard { flex-direction: column; }
+      .sgrid { grid-template-columns: 1fr; }
+      .svcs-hero { padding: 44px 20px 32px; }
+      .ctasec { padding: 56px 20px; }
+      .ctasec h2 { font-size: 26px; }
+      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; }
+    }
+
+    /* POPUPS */
+    .popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(4px); z-index:1000; align-items:center; justify-content:center; }
+    .popup-overlay.active { display:flex; animation:fadeIn .25s ease; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .popup-box { background:#fff; border-radius:16px; width:90%; max-width:440px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.15); animation:slideUp .3s ease; }
+    @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .popup-header { background:linear-gradient(135deg,#f5f3ff,#ede9fe); padding:22px 24px 16px; border-bottom:1px solid #ede9fe; position:relative; }
+    .popup-close { position:absolute; top:14px; right:16px; background:none; border:none; font-size:18px; color:#9ca3af; cursor:pointer; line-height:1; }
+    .popup-close:hover { color:#111827; }
+    .popup-icon { font-size:28px; margin-bottom:8px; display:block; }
+    .popup-gift { display:inline-flex; align-items:center; gap:5px; background:#f0fdf4; border:1px solid #bbf7d0; padding:3px 10px; border-radius:100px; font-size:11px; color:#16a34a; font-weight:700; margin-bottom:8px; }
+    .popup-header h3 { font-size:16px; font-weight:800; color:#111827; line-height:1.3; margin-bottom:4px; letter-spacing:-.3px; }
+    .popup-header p { font-size:12px; color:#6b7280; line-height:1.6; }
+    .popup-body { padding:20px 24px 24px; }
+    .popup-body label { font-size:12px; font-weight:600; color:#374151; display:block; margin-bottom:5px; }
+    .popup-body input { width:100%; border:1.5px solid #e5e7eb; border-radius:8px; padding:10px 13px; font-size:13px; color:#111827; outline:none; margin-bottom:12px; transition:border-color .2s; font-family:inherit; }
+    .popup-body input:focus { border-color:#7c6eec; }
+    .popup-submit { width:100%; background:#7c6eec; color:#fff; border:none; padding:12px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; transition:all .2s; letter-spacing:-.2px; }
+    .popup-submit:hover { background:#6d5fd4; transform:translateY(-1px); }
+    .popup-sub { font-size:11px; color:#9ca3af; text-align:center; margin-top:10px; }
+    .popup-success { text-align:center; padding:32px 24px; }
+    .popup-success .success-icon { font-size:40px; margin-bottom:12px; display:block; }
+    .popup-success h3 { font-size:16px; font-weight:800; color:#111827; margin-bottom:6px; }
+    .popup-success p { font-size:13px; color:#6b7280; line-height:1.6; }
+
+
+    .soc-tab { padding:5px 10px;border-radius:6px;border:1.5px solid #e5e7eb;font-size:11px;cursor:pointer;font-family:inherit;background:#fff;color:#6b7280;font-weight:500;transition:all .2s; }
+    .soc-tab.on { border-color:#7c6eec;background:#f5f3ff;color:#7c6eec;font-weight:700; }
+    .result-box { background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden; }
+    .result-hdr { background:#f5f3ff;padding:7px 12px;border-bottom:1px solid #ede9fe;font-size:10px;font-weight:700;color:#7c6eec;text-transform:uppercase;letter-spacing:.5px; }
+    .btn-back { background:none;border:1px solid #e5e7eb;padding:5px 11px;border-radius:6px;font-size:11px;color:#6b7280;cursor:pointer;font-family:inherit;margin-top:8px; }
+    .btn-back:hover { background:#f9fafb; }
+    .chat-msg { max-width:82%;padding:7px 11px;font-size:12px;line-height:1.55;border-radius:9px; }
+    .chat-msg.bot { background:#f5f3ff;color:#374151;align-self:flex-start;border-radius:2px 9px 9px 9px;border:1px solid #ede9fe; }
+    .chat-msg.user { background:#7c6eec;color:#fff;align-self:flex-end;border-radius:9px 2px 9px 9px; }
+    .chat-typing { background:#f5f3ff;border:1px solid #ede9fe;padding:7px 11px;border-radius:2px 9px 9px 9px;font-size:12px;color:#7c6eec;align-self:flex-start; }
+
+  </style>
+</head>
+<body>
+
+  <!-- SVG logo reutilizable oculto -->
+  <svg style="display:none">
+    <symbol id="logo-icon" viewBox="0 0 64 64">
+      <!-- Círculo exterior -->
+      <circle cx="32" cy="32" r="28" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.35"/>
+      <!-- Círculo medio -->
+      <circle cx="32" cy="32" r="18" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.5"/>
+      <!-- Círculo interior (reloj) -->
+      <circle cx="32" cy="32" r="9" fill="none" stroke="#7c6eec" stroke-width="1.5"/>
+      <!-- Manecillas del reloj -->
+      <line x1="32" y1="32" x2="32" y2="25" stroke="#7c6eec" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="32" y1="32" x2="37" y2="35" stroke="#7c6eec" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- Punto centro -->
+      <circle cx="32" cy="32" r="1.5" fill="#7c6eec"/>
+      <!-- Líneas radiales -->
+      <line x1="32" y1="4" x2="32" y2="14" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <line x1="32" y1="50" x2="32" y2="60" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <line x1="4" y1="32" x2="14" y2="32" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <line x1="50" y1="32" x2="60" y2="32" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <!-- Nodos orbitales -->
+      <circle cx="32" cy="4"  r="3.5" fill="#7c6eec" opacity="0.8"/>
+      <circle cx="56" cy="20" r="2.5" fill="#7c6eec" opacity="0.6"/>
+      <circle cx="56" cy="44" r="2"   fill="#7c6eec" opacity="0.5"/>
+      <circle cx="8"  cy="44" r="2.5" fill="#7c6eec" opacity="0.6"/>
+      <circle cx="14" cy="16" r="2"   fill="#7c6eec" opacity="0.5"/>
+      <!-- Onda sinusoidal -->
+      <path d="M4 32 Q10 26 16 32 Q22 38 28 32 Q34 26 40 32 Q46 38 52 32 Q58 26 60 32" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.4"/>
+    </symbol>
+  </svg>
+
+  <nav>
+    <a class="logo-wrap" href="#" onclick="sp('home');return false;">
+      <svg class="logo-svg"><use href="#logo-icon"/></svg>
+      <div>
+        <div class="logo-text">Marirrodriga<b>.IA</b></div>
+      </div>
+    </a>
+    <div class="nl">
+      <a class="on" id="nh" onclick="sp('home')">Inicio</a>
+      <a id="ns" onclick="sp('svcs')">Servicios</a>
+      <a href="#contacto">Blog</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <button class="nb" onclick="sp('svcs')">Ver servicios →</button>
+  </nav>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <div class="hero">
+      <div class="hgrid"></div>
+      <div class="hglow"></div>
+      <div class="nodes" id="nd"></div>
+      <div class="badge"><div class="bdot"></div>Desarrollo web · Automatización · Inteligencia Artificial</div>
+      <h1>Hacemos que tu empresa<br>trabaje sola. <em>De verdad.</em></h1>
+      <p class="sub">Automatizamos, construimos y conectamos inteligencia artificial a tu negocio. Sin intermediarios, sin estructuras infladas y sin los precios de las grandes consultoras.</p>
+      <div class="hbtns">
+        <button class="hb1" onclick="sp('svcs')">Explorar servicios →</button>
+        <button class="hb2" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar consulta gratuita</button>
+      </div>
+      <div class="hstats">
+        <div class="hs"><div class="hn"><b>−</b>80<b>%</b></div><div class="hl">Coste vs grandes agencias</div></div>
+        <div class="hs"><div class="hn"><b>&lt;</b>72<b>h</b></div><div class="hl">Primera automatización activa</div></div>
+        <div class="hs"><div class="hn">24<b>/7</b></div><div class="hl">Sistemas sin intervención humana</div></div>
+        <div class="hs"><div class="hn"><b>0</b></div><div class="hl">Intermediarios en el proceso</div></div>
+      </div>
+    </div>
+
+    <section>
+      <div class="stitle center"><div class="slbl">Caso real</div><h2>Un ejemplo vale más que mil promesas</h2><p>Antes de contarte cómo trabajamos, te mostramos qué hemos hecho. Esto no es un caso inventado.</p></div>
+      <div class="case">
+        <div class="case-top"><div class="case-ico">🏃</div><div><h3>Fisioterapia a domicilio · Profesional independiente</h3><p>Negocio unipersonal, sin equipo, sin recepción — toda la gestión recaía sobre una sola persona</p></div></div>
+        <div class="case-cols">
+          <div class="ccol"><h4>El problema</h4><p>Cada llamada mientras atendía a un paciente era un cliente perdido. <em>50€ por sesión</em> que se escapaban, más la posibilidad de fidelizarlo durante meses. Un coste de oportunidad silencioso y constante.</p></div>
+          <div class="ccol"><h4>La solución</h4><p>Chatbot IA en web y WhatsApp que <em>atiende al instante</em>, hace diagnóstico básico y <em>agenda citas automáticamente</em> sin que él tenga que intervenir.</p></div>
+          <div class="ccol"><h4>El resultado</h4><div class="rpill">✓ 0 llamadas perdidas</div><p><em>Citas gestionadas 24/7</em>. El sistema atiende, agenda y confirma. Él solo trata pacientes. El coste de oportunidad: eliminado.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center"><div class="slbl">Proceso</div><h2>Sin reuniones infinitas. Sin promesas vacías.</h2><p>Del primer contacto a tu sistema en producción. Directo y sin burocracia.</p></div>
+      <div class="steps">
+        <div class="step"><div class="stepn">🎯<div class="stepnum">1</div></div><h3>Analizamos</h3><p>Identificamos tus costes de oportunidad y dónde está el mayor impacto posible.</p></div>
+        <div class="step"><div class="stepn">🏗️<div class="stepnum">2</div></div><h3>Diseñamos</h3><p>Construimos la solución exacta para ti. Sin plantillas genéricas.</p></div>
+        <div class="step"><div class="stepn">⚡<div class="stepnum">3</div></div><h3>Desplegamos</h3><p>Tu sistema activo en tiempo récord, sin interrumpir tu operativa.</p></div>
+        <div class="step"><div class="stepn">📈<div class="stepnum">4</div></div><h3>Evolucionamos</h3><p>Monitorizamos y mejoramos con datos reales de forma continua.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center"><div class="slbl">Por qué elegirnos</div><h2>Misma tecnología que las grandes.<br>Sin sus precios ni sus tiempos.</h2></div>
+      <div class="whygrid">
+        <div class="wycard"><div class="wyico">👥</div><h3>Trato directo</h3><p>Hablas con quien construye tu sistema. Sin account managers ni capas innecesarias.</p></div>
+        <div class="wycard"><div class="wyico">⚡</div><h3>Velocidad real</h3><p>Lo que una agencia grande tarda en presupuestar, nosotros ya lo tenemos funcionando.</p></div>
+        <div class="wycard"><div class="wyico">💶</div><h3>Precio justo</h3><p>Sin estructuras corporativas en tu factura. Pagas el trabajo, no los despachos.</p></div>
+        <div class="wycard"><div class="wyico">🧩</div><h3>Todo integrado</h3><p>Web, IA, automatizaciones y publicidad con visión completa de tu negocio.</p></div>
+        <div class="wycard"><div class="wyico">📊</div><h3>Resultados medibles</h3><p>No vendemos horas. Vendemos impacto concreto desde el primer día.</p></div>
+        <div class="wycard"><div class="wyico">🔄</div><h3>Escala contigo</h3><p>Los sistemas crecen con tu empresa. Sin empezar de cero cada vez.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center"><div class="slbl">Lo que dicen nuestros clientes</div><h2>Sin filtros</h2></div>
+      <div class="tst">
+        <div class="stars">★★★★★</div>
+        <blockquote>Estaba perdiendo clientes cada vez que cogía el teléfono en mitad de una sesión. Montaron el chatbot en dos días. Ahora agenda solo, confirma las citas y yo solo aparezco a trabajar. Es como tener un recepcionista que nunca se toma el día libre.</blockquote>
+        <div class="tauth"><div class="tava">F</div><div><div class="taname">Francisco · Fisioterapeuta a domicilio</div><div class="taco">Cliente real · Islas Canarias</div></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center"><div class="slbl">El equipo</div><h2>Las personas detrás del sistema</h2><p>Un equipo técnico especializado. Cuando nos contratas, trabajas con quienes construyen.</p></div>
+      <div class="teamgrid">
+        <div class="tcard"><div class="tav-big">MM</div><div class="tinfo"><h3>Marco Marirrodriga</h3><div class="trole">Co-fundador · Full Stack Developer</div><div class="tdesc">Especializado en desarrollo web moderno e integración de sistemas. Construye las interfaces y arquitecturas que hacen posible cada automatización.</div><div class="ttags"><span class="tt">React / Next.js</span><span class="tt">Node.js</span><span class="tt">UI/UX</span><span class="tt">Integraciones API</span></div></div></div>
+        <div class="tcard"><div class="tav-big">IM</div><div class="tinfo"><h3>Ismael Marirrodriga</h3><div class="trole">Co-fundador · IA Engineer</div><div class="tdesc">Especializado en automatización de procesos e integración de IA. Diseña los sistemas que hacen que los negocios funcionen de forma autónoma.</div><div class="ttags"><span class="tt">Agentes IA</span><span class="tt">LLMs</span><span class="tt">Automatización</span><span class="tt">n8n · Make</span></div></div></div>
+      </div>
+    </section>
+
+    <div class="ctasec" id="contacto">
+      <h2>¿Cuánto te está costando<br>no estar <em>automatizado</em>?</h2>
+      <p>La consulta es gratuita. El diagnóstico es inmediato. La propuesta llega en menos de 24 horas.</p>
+      <button class="ctabig" onclick="sp('svcs')">Ver todos los servicios →</button>
+      <div class="ctasub">Sin compromiso · Primera consulta gratuita · Respuesta en menos de 24h</div>
+    </div>
+  </div>
+
+  <!-- SERVICIOS -->
+  <div id="page-svcs" class="page">
+    <div class="svcs-hero">
+      <div class="svc-note"><div class="bdot"></div>IA real · Prueba cada demo ahora mismo</div>
+      <h1>Servicios que se venden<br><em>a través de sí mismos</em></h1>
+      <p>No te explicamos lo que hacemos. Pruébalo aquí mismo, con IA de verdad. El popup para dejarnos tu contacto aparece solo después de que pruebes cada servicio.</p>
+    </div>
+
+    <section style="padding: 32px 48px 60px; border-top: none;">
+      <div class="sgrid">
+
+        <!-- CHATBOT IA REAL -->
+        <div class="sc">
+          <div class="sch"><div class="sci">🤖</div><div class="scinfo"><h3>Chatbot empresarial IA</h3><p>IA real de captación. Pide el nombre de tu empresa y encauza hacia una cita.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="chatbox" style="height:155px;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:6px"></div>
+            <div class="cinput">
+              <input id="ci" placeholder="Escribe tu mensaje..." onkeydown="if(event.key==='Enter')sendChat()"/>
+              <button onclick="sendChat()">Enviar</button>
+            </div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres este chatbot para tu negocio?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('chatbot', true)">📩 Prueba gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMAIL IA REAL -->
+        <div class="sc">
+          <div class="sch"><div class="sci">📧</div><div class="scinfo"><h3>Generador de emails de captación</h3><p>Describe tu empresa y la IA redacta un email profesional al instante.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="email-widget" style="padding:10px">
+              <p style="font-size:11px;color:#6b7280;margin-bottom:7px;line-height:1.5">Describe tu empresa y generamos un email de captación de leads profesional.</p>
+              <textarea id="email-desc" placeholder="Ej: Clínica dental en Madrid especializada en ortodoncia invisible para adultos…" style="width:100%;height:65px;padding:9px 11px;resize:none;box-sizing:border-box;font-size:11px;border:1.5px solid #e5e7eb;border-radius:7px;font-family:inherit;color:#111827;outline:none;line-height:1.5" onfocus="this.style.borderColor='#7c6eec'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
+              <button id="email-btn" onclick="genEmail()" style="width:100%;padding:9px;margin-top:7px;background:#7c6eec;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">✨ Generar email</button>
+            </div>
+            <div id="email-result" style="display:none;padding:10px"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres emails automáticos para tu empresa?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('email', true)">📩 Prueba gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FACTURAS IA REAL -->
+        <div class="sc">
+          <div class="sch"><div class="sci">🧾</div><div class="scinfo"><h3>Factura automática con IA</h3><p>Rellena los datos y la IA genera tu factura profesional al instante.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="invoice-widget" style="padding:10px;font-size:12px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px">
+                <div><label style="font-size:11px;font-weight:700;color:#374151;display:block;margin-bottom:3px">Cliente *</label><input id="inv-client" placeholder="Nombre del cliente" style="width:100%;padding:7px 9px;box-sizing:border-box;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none" onfocus="this.style.borderColor='#7c6eec'" onblur="this.style.borderColor='#e5e7eb'"></div>
+                <div><label style="font-size:11px;font-weight:700;color:#374151;display:block;margin-bottom:3px">NIF</label><input id="inv-nif" placeholder="12345678A" style="width:100%;padding:7px 9px;box-sizing:border-box;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none" onfocus="this.style.borderColor='#7c6eec'" onblur="this.style.borderColor='#e5e7eb'"></div>
+              </div>
+              <div id="inv-lines">
+                <label style="font-size:11px;font-weight:700;color:#374151;display:block;margin-bottom:4px">Servicios</label>
+                <div class="inv-line" style="display:grid;grid-template-columns:1fr 46px 66px;gap:5px;margin-bottom:5px">
+                  <input placeholder="Descripción" style="padding:6px 8px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none">
+                  <input type="number" placeholder="Ud." min="1" value="1" style="padding:6px 6px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none">
+                  <input placeholder="€/ud" style="padding:6px 6px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none">
+                </div>
+              </div>
+              <button onclick="addInvLine()" style="background:none;border:1px dashed #c4b5fd;color:#7c6eec;padding:4px 9px;border-radius:6px;font-size:11px;cursor:pointer;margin-bottom:7px;font-family:inherit">+ Añadir línea</button>
+              <button id="invoice-btn" onclick="genInvoice()" style="width:100%;padding:9px;background:#7c6eec;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">🧾 Generar factura</button>
+            </div>
+            <div id="invoice-result" style="display:none;padding:10px"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres facturación automática para tu negocio?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('invoice', true)">📩 Prueba gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REDES IA REAL -->
+        <div class="sc">
+          <div class="sch"><div class="sci">📱</div><div class="scinfo"><h3>Contenido para redes sociales</h3><p>Describe tu empresa y la IA genera el copy del post + prompt para la imagen.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="social-widget" style="padding:10px">
+              <div style="display:flex;gap:5px;margin-bottom:8px">
+                <button class="soc-tab on" onclick="setSocPlat(this,'instagram')">📸 Instagram</button>
+                <button class="soc-tab" onclick="setSocPlat(this,'tiktok')">🎵 TikTok</button>
+                <button class="soc-tab" onclick="setSocPlat(this,'linkedin')">💼 LinkedIn</button>
+              </div>
+              <input type="hidden" id="social-platform" value="instagram">
+              <textarea id="social-desc" placeholder="Ej: Restaurante italiano en Valencia, pasta fresca artesanal, ambiente familiar…" style="width:100%;height:60px;padding:9px 11px;resize:none;box-sizing:border-box;font-size:11px;border:1.5px solid #e5e7eb;border-radius:7px;font-family:inherit;color:#111827;outline:none;line-height:1.5" onfocus="this.style.borderColor='#7c6eec'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
+              <button id="social-btn" onclick="genSocial()" style="width:100%;padding:9px;margin-top:7px;background:#7c6eec;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">✨ Generar post + prompt imagen</button>
+            </div>
+            <div id="social-result" style="display:none;padding:10px"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres 10 posts reales para tu empresa esta semana?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('social', true)">📩 10 posts gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOCKUP IA REAL -->
+        <div class="sc" style="grid-column:1/-1">
+          <div class="sch"><div class="sci">🌐</div><div class="scinfo"><h3>Generador de mockups web con IA</h3><p>Describe tu empresa o web actual y la IA genera un mockup HTML moderno al instante. Para autónomos, pymes y grandes empresas.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="mockup-widget" style="padding:10px">
+              <p style="font-size:11px;color:#6b7280;margin-bottom:7px;line-height:1.5">Describe tu empresa o tu web actual. La IA genera un diseño web moderno personalizado.</p>
+              <textarea id="mockup-desc" placeholder="Ej: Tengo una academia de inglés en Sevilla para adultos profesionales. Mi web es muy anticuada, fondo gris, letra pequeña. Quiero algo moderno y que convierta..." style="width:100%;height:68px;padding:9px 11px;resize:none;box-sizing:border-box;font-size:11px;border:1.5px solid #e5e7eb;border-radius:7px;font-family:inherit;color:#111827;outline:none;line-height:1.5" onfocus="this.style.borderColor='#7c6eec'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
+              <button id="mockup-btn" onclick="genMockup()" style="width:100%;padding:9px;margin-top:7px;background:#7c6eec;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">🌐 Generar mockup web al instante</button>
+            </div>
+            <div id="mockup-result" style="display:none;padding:10px"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres un análisis gratuito de tu web actual?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('mockup', true)">📩 Análisis gratis →</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="ctasec">
+      <h2>¿Qué proceso quieres<br><em>eliminar primero?</em></h2>
+      <p>Cuéntanoslo. En menos de 24h tienes una propuesta concreta y un precio claro.</p>
+      <button class="ctabig">Hablar con el equipo →</button>
+      <div class="ctasub">Sin compromiso · Sin intermediarios · Respuesta garantizada en menos de 24h</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <svg width="28" height="28" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.4"/>
+        <circle cx="32" cy="32" r="18" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.55"/>
+        <circle cx="32" cy="32" r="9"  fill="none" stroke="#7c6eec" stroke-width="1.5"/>
+        <line x1="32" y1="32" x2="32" y2="25" stroke="#7c6eec" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="32" y1="32" x2="37" y2="35" stroke="#7c6eec" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="32" cy="32" r="1.5" fill="#7c6eec"/>
+        <circle cx="32" cy="4"  r="3.5" fill="#7c6eec" opacity="0.7"/>
+        <circle cx="56" cy="20" r="2.5" fill="#7c6eec" opacity="0.55"/>
+        <circle cx="8"  cy="44" r="2.5" fill="#7c6eec" opacity="0.55"/>
+        <path d="M4 32 Q10 26 16 32 Q22 38 28 32 Q34 26 40 32 Q46 38 52 32 Q58 26 60 32" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.4"/>
+      </svg>
+      <div>
+        <div class="footer-logo-text">Marirrodriga<b>.IA</b></div>
+        <div class="footer-tagline">Automatizamos lo que te roba tiempo.</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a onclick="sp('home')">Inicio</a>
+      <a onclick="sp('svcs')">Servicios</a>
+      <a>Blog</a>
+      <a>Contacto</a>
+    </div>
+    <div class="footer-copy">© 2025 Marirrodriga.IA · Todos los derechos reservados</div>
+  </footer>
+
+  <script>
+    // ── NAV & NODES ──────────────────────────────────────────────────────────────
+    const nd = document.getElementById('nd');
+    for (let i = 0; i < 14; i++) {
+      const n = document.createElement('div');
+      const s = 2 + Math.random() * 5;
+      n.className = 'node';
+      n.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${3+Math.random()*5}s;animation-delay:${Math.random()*4}s`;
+      nd.appendChild(n);
+    }
+    function sp(p) {
+      document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+      document.getElementById('page-' + p).classList.add('active');
+      document.getElementById('nh').classList.toggle('on', p === 'home');
+      document.getElementById('ns').classList.toggle('on', p === 'svcs');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── CLAUDE API ───────────────────────────────────────────────────────────────
+    // En producción (Netlify): las peticiones van a /.netlify/functions/claude
+    // En desarrollo local: van directamente a la API de Anthropic
+    async function callClaude(system, messages, maxTokens) {
+      const isNetlify = window.location.hostname !== 'localhost' && !window.location.hostname.includes('127.0.0.1');
+      const endpoint = isNetlify
+        ? '/.netlify/functions/claude'
+        : 'https://api.anthropic.com/v1/messages';
+      const body = { model: 'claude-sonnet-4-20250514', max_tokens: maxTokens || 800, system, messages };
+      const r = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(isNetlify ? body : body)
+      });
+      const d = await r.json();
+      if (d.error) throw new Error(d.error.message);
+      // Netlify function returns { text } directly; Anthropic returns content array
+      return d.text || d.content[0].text;
+    }
+
+    // ── POPUP SYSTEM ─────────────────────────────────────────────────────────────
+    const POPUPS = {
+      chatbot:  { icon:'🤖', gift:'🎁 Demo configurada gratis',   title:'¿Quieres este chatbot para tu empresa?',     desc:'Lo configuramos con tu información real. Listo en 48h.', cta:'Quiero el chatbot →' },
+      email:    { icon:'📧', gift:'🎁 Email personalizado gratis', title:'¿Emails automáticos para tu negocio?',       desc:'Te generamos una secuencia adaptada a tu empresa.', cta:'Quiero mis emails →' },
+      invoice:  { icon:'🧾', gift:'🎁 Sistema configurado gratis', title:'¿Quieres facturación automática?',           desc:'Lo montamos con tus datos reales en menos de 24h.', cta:'Quiero el sistema →' },
+      social:   { icon:'📱', gift:'🎁 10 posts gratis',            title:'¿10 posts reales para tu empresa?',          desc:'Listos para publicar en Instagram, TikTok o LinkedIn esta semana.', cta:'Quiero mis 10 posts →' },
+      mockup:   { icon:'🌐', gift:'🎁 Análisis web gratuito',      title:'¿Análisis completo de tu web?',              desc:'Te decimos las 3 mejoras que más conversión generarían ahora mismo.', cta:'Quiero el análisis →' },
+    };
+    const _interacted = {};
+    let _curPopup = null;
+
+    function triggerPopup(service, force) {
+      if (_interacted[service] && !force) return;
+      _interacted[service] = true;
+      _curPopup = service;
+      const p = POPUPS[service];
+      document.getElementById('pop-icon').textContent = p.icon;
+      document.getElementById('pop-gift').textContent = p.gift;
+      document.getElementById('pop-title').textContent = p.title;
+      document.getElementById('pop-desc').textContent = p.desc;
+      document.getElementById('pop-cta').textContent = p.cta;
+      document.getElementById('pop-form').style.display = 'block';
+      document.getElementById('pop-success').style.display = 'none';
+      document.getElementById('pop-name').value = '';
+      document.getElementById('pop-email').value = '';
+      setTimeout(() => document.getElementById('pop-overlay').style.display = 'flex', 700);
+    }
+    function closePopup() { document.getElementById('pop-overlay').style.display = 'none'; }
+    function submitPopup() {
+      const name = document.getElementById('pop-name').value.trim();
+      const email = document.getElementById('pop-email').value.trim();
+      if (!name || !email) { alert('Por favor rellena tu nombre y email.'); return; }
+      document.getElementById('pop-form').style.display = 'none';
+      document.getElementById('pop-success').style.display = 'block';
+      document.getElementById('pop-thanks').textContent = '¡Perfecto, ' + name + '!';
+      // TODO: fetch('TU_WEBHOOK_N8N', { method:'POST', headers:{'Content-Type':'application/json'},
+      //   body: JSON.stringify({ name, email, service: _curPopup, timestamp: new Date().toISOString() }) });
+    }
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.id === 'pop-overlay') closePopup();
+    });
+
+    // ── CHATBOT ──────────────────────────────────────────────────────────────────
+    const CHAT_SYS = `Eres el asistente de captación de Marirrodriga.IA, agencia de automatización con IA para pequeñas empresas españolas.
+Tu misión: demostrar cómo un chatbot de IA gestiona la captación de clientes de forma profesional.
+Flujo: 1) Pide nombre de empresa y sector. 2) Identifica el mayor dolor operativo. 3) Cuantifica el problema. 4) Presenta la solución de Marirrodriga.IA. 5) Propón demo de 20 minutos.
+Reglas: máximo 2-3 frases por respuesta. Cercano y profesional. Siempre en español. 1 emoji máximo por respuesta.`;
+    let chatHistory = [];
+    let chatExchanges = 0;
+
+    function addChatMsg(text, role) {
+      const box = document.getElementById('chatbox');
+      const d = document.createElement('div');
+      d.className = 'chat-msg ' + role;
+      d.textContent = text;
+      box.appendChild(d);
+      box.scrollTop = box.scrollHeight;
+    }
+    setTimeout(() => addChatMsg('¡Hola! Soy el asistente de captación de Marirrodriga.IA 👋 ¿Cuál es el nombre de tu empresa y a qué os dedicáis?', 'bot'), 400);
+
+    async function sendChat() {
+      const ci = document.getElementById('ci');
+      const text = ci.value.trim();
+      if (!text) return;
+      ci.value = '';
+      addChatMsg(text, 'user');
+      chatHistory.push({ role: 'user', content: text });
+      const box = document.getElementById('chatbox');
+      const typing = document.createElement('div');
+      typing.className = 'chat-typing';
+      typing.textContent = '✦ Escribiendo...';
+      box.appendChild(typing);
+      box.scrollTop = box.scrollHeight;
+      try {
+        const msgs = [{ role:'assistant', content:'¡Hola! Soy el asistente de captación de Marirrodriga.IA 👋 ¿Cuál es el nombre de tu empresa y a qué os dedicáis?' }, ...chatHistory];
+        const reply = await callClaude(CHAT_SYS, msgs, 400);
+        typing.remove();
+        addChatMsg(reply, 'bot');
+        chatHistory.push({ role: 'assistant', content: reply });
+        chatExchanges++;
+        if (chatExchanges >= 2) triggerPopup('chatbot');
+      } catch(e) { typing.remove(); addChatMsg('Error de conexión. Inténtalo de nuevo.', 'bot'); }
+    }
+
+    // ── EMAIL ────────────────────────────────────────────────────────────────────
+    const EMAIL_SYS = `Eres un experto en email marketing para pymes españolas. Genera un email profesional de captación de leads basado en la descripción de la empresa.
+Formato EXACTO:
+ASUNTO: [asunto - máx 60 chars]
+
+Hola [Nombre],
+
+[párrafo 1: conecta con el dolor]
+
+[párrafo 2: propuesta de valor]
+
+[CTA directo]
+
+[Firma]
+
+P.D.: [urgencia]
+
+Solo el email. Sin explicaciones.`;
+
+    async function genEmail() {
+      const desc = document.getElementById('email-desc').value.trim();
+      if (!desc) return;
+      const btn = document.getElementById('email-btn');
+      btn.disabled = true; btn.textContent = '✦ Generando email...'; btn.style.background = '#c4b5fd';
+      try {
+        const text = await callClaude(EMAIL_SYS, [{ role:'user', content:'Mi empresa: ' + desc }], 700);
+        const lines = text.split('\n');
+        const subj = (lines.find(l => l.startsWith('ASUNTO:')) || '').replace('ASUNTO:', '').trim();
+        const body = lines.filter(l => !l.startsWith('ASUNTO:')).join('\n').trim();
+        document.getElementById('email-widget').style.display = 'none';
+        const res = document.getElementById('email-result');
+        res.style.display = 'block';
+        res.innerHTML = `<div class="result-box"><div class="result-hdr">📧 Email generado por IA</div><div style="padding:8px 12px;font-size:11px"><div style="color:#6b7280;padding:3px 0;border-bottom:1px solid #f3f4f6"><b style="color:#374151">De: </b>tu@empresa.com</div><div style="color:#6b7280;padding:3px 0;border-bottom:1px solid #f3f4f6"><b style="color:#374151">Para: </b>prospecto@cliente.com</div><div style="font-weight:700;color:#111827;padding:3px 0"><b style="color:#374151">Asunto: </b>${subj}</div></div><div style="padding:10px 12px;font-size:12px;color:#374151;line-height:1.75;white-space:pre-wrap;max-height:130px;overflow-y:auto">${body}</div></div><button class="btn-back" onclick="resetEmail()">← Nueva empresa</button>`;
+        triggerPopup('email');
+      } catch(e) { btn.disabled = false; btn.textContent = '✨ Generar email'; btn.style.background = '#7c6eec'; }
+    }
+    function resetEmail() {
+      document.getElementById('email-widget').style.display = 'block';
+      document.getElementById('email-result').style.display = 'none';
+      const btn = document.getElementById('email-btn');
+      btn.disabled = false; btn.textContent = '✨ Generar email'; btn.style.background = '#7c6eec';
+    }
+
+    // ── FACTURAS ─────────────────────────────────────────────────────────────────
+    const INVOICE_SYS = `Eres un sistema de generación de facturas profesionales españolas. Genera una factura en HTML con estilos inline basada en los datos. Incluye: número FAC-2026-XXX, fecha, emisor Marirrodriga.IA, datos cliente, tabla servicios, subtotal, IVA 21% y total. Diseño limpio y profesional. DEVUELVE SOLO EL HTML sin explicaciones ni markdown.`;
+
+    function addInvLine() {
+      const c = document.getElementById('inv-lines');
+      const d = document.createElement('div');
+      d.className = 'inv-line';
+      d.style.cssText = 'display:grid;grid-template-columns:1fr 46px 66px;gap:5px;margin-bottom:5px';
+      d.innerHTML = '<input placeholder="Descripción" style="padding:6px 8px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none"><input type="number" placeholder="Ud." min="1" value="1" style="padding:6px 6px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none"><input placeholder="€/ud" style="padding:6px 6px;border:1.5px solid #e5e7eb;border-radius:6px;font-size:11px;font-family:inherit;outline:none">';
+      c.appendChild(d);
+    }
+
+    async function genInvoice() {
+      const client = document.getElementById('inv-client').value.trim();
+      if (!client) { alert('Añade el nombre del cliente'); return; }
+      const nif = document.getElementById('inv-nif').value.trim();
+      let services = '';
+      document.querySelectorAll('.inv-line').forEach(l => {
+        const inputs = l.querySelectorAll('input');
+        services += `- ${inputs[0].value||'Servicio'}: ${inputs[1].value||1} x ${inputs[2].value||0}€\n`;
+      });
+      const data = `Fecha: ${new Date().toLocaleDateString('es-ES')}\nCliente: ${client}${nif?' | NIF: '+nif:''}\nServicios:\n${services}`;
+      const btn = document.getElementById('invoice-btn');
+      btn.disabled = true; btn.textContent = '✦ Generando factura...'; btn.style.background = '#c4b5fd';
+      try {
+        const html = await callClaude(INVOICE_SYS, [{ role:'user', content: data }], 1000);
+        const clean = html.replace(/\`\`\`html\n?/g,'').replace(/\`\`\`\n?/g,'').trim();
+        const enc = clean.replace(/"/g,'&quot;');
+        document.getElementById('invoice-widget').style.display = 'none';
+        const res = document.getElementById('invoice-result');
+        res.style.display = 'block';
+        res.innerHTML = `<div class="result-box" style="margin-bottom:8px"><div class="result-hdr">🧾 Factura generada por IA</div><iframe srcdoc="${enc}" style="width:100%;height:220px;border:none" title="Factura"></iframe></div><button class="btn-back" onclick="resetInvoice()">← Nueva factura</button>`;
+        triggerPopup('invoice');
+      } catch(e) { btn.disabled = false; btn.textContent = '🧾 Generar factura'; btn.style.background = '#7c6eec'; }
+    }
+    function resetInvoice() {
+      document.getElementById('invoice-widget').style.display = 'block';
+      document.getElementById('invoice-result').style.display = 'none';
+      const btn = document.getElementById('invoice-btn');
+      btn.disabled = false; btn.textContent = '🧾 Generar factura'; btn.style.background = '#7c6eec';
+    }
+
+    // ── REDES ────────────────────────────────────────────────────────────────────
+    const SOCIAL_SYS = `Eres un experto en contenido para redes sociales para empresas locales españolas. Genera contenido listo para publicar.
+Formato EXACTO:
+📝 COPY:
+[Hook potente. Cuerpo 3-4 líneas. CTA. 5-7 hashtags.]
+
+📸 PROMPT IMAGEN:
+[Prompt en inglés para Midjourney/DALL-E. Describe: sujeto, estilo, iluminación, composición. Máx 80 palabras.]
+
+📊 DATOS:
+Mejor horario: [día y hora]
+Formato: [Reel/Carrusel/Imagen]
+Alcance estimado: [rango]
+
+Solo esto.`;
+
+    function setSocPlat(btn, plat) {
+      document.querySelectorAll('.soc-tab').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById('social-platform').value = plat;
+    }
+
+    async function genSocial() {
+      const desc = document.getElementById('social-desc').value.trim();
+      const plat = document.getElementById('social-platform').value;
+      if (!desc) return;
+      const btn = document.getElementById('social-btn');
+      btn.disabled = true; btn.textContent = '✦ Generando post...'; btn.style.background = '#c4b5fd';
+      try {
+        const text = await callClaude(SOCIAL_SYS, [{ role:'user', content:`Empresa: ${desc}\nPlataforma: ${plat}` }], 700);
+        const copyM = text.match(/📝 COPY:\n([\s\S]*?)(?=📸|$)/);
+        const imgM  = text.match(/📸 PROMPT IMAGEN:\n([\s\S]*?)(?=📊|$)/);
+        const statM = text.match(/📊 DATOS:\n([\s\S]*?)$/);
+        const copy = copyM ? copyM[1].trim() : text;
+        const img  = imgM  ? imgM[1].trim()  : '';
+        const stat = statM ? statM[1].trim() : '';
+        document.getElementById('social-widget').style.display = 'none';
+        const res = document.getElementById('social-result');
+        res.style.display = 'block';
+        res.innerHTML = `<div style="display:flex;flex-direction:column;gap:7px"><div class="result-box"><div class="result-hdr">📝 Copy del post</div><div style="padding:10px 12px;font-size:12px;color:#374151;line-height:1.75;white-space:pre-wrap;max-height:95px;overflow-y:auto">${copy}</div></div>${img?`<div class="result-box"><div class="result-hdr">📸 Prompt para imagen · Midjourney / DALL·E</div><div style="padding:10px 12px;font-size:11px;color:#6b7280;line-height:1.6;font-style:italic">${img}</div></div>`:''} ${stat?`<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:8px 12px;font-size:11px;color:#374151;white-space:pre-line"><b style="color:#16a34a;display:block;margin-bottom:3px">📊 Datos</b>${stat}</div>`:''}<button class="btn-back" onclick="resetSocial()">← Nueva empresa</button></div>`;
+        triggerPopup('social');
+      } catch(e) { btn.disabled = false; btn.textContent = '✨ Generar post + prompt imagen'; btn.style.background = '#7c6eec'; }
+    }
+    function resetSocial() {
+      document.getElementById('social-widget').style.display = 'block';
+      document.getElementById('social-result').style.display = 'none';
+      const btn = document.getElementById('social-btn');
+      btn.disabled = false; btn.textContent = '✨ Generar post + prompt imagen'; btn.style.background = '#7c6eec';
+    }
+
+    // ── MOCKUP ───────────────────────────────────────────────────────────────────
+    const MOCKUP_SYS = `Eres un experto en diseño web moderno. El usuario describirá su empresa o web actual. Genera el HTML completo de una landing page moderna para esa empresa. Requisitos: HTML con CSS en <style>, diseño moderno (hero + 3 servicios en cards + CTA), paleta coherente con el sector, emojis como iconos, en español, sin JavaScript. DEVUELVE SOLO EL HTML empezando por <!DOCTYPE html>. Sin markdown ni explicaciones.`;
+
+    async function genMockup() {
+      const desc = document.getElementById('mockup-desc').value.trim();
+      if (!desc) return;
+      const btn = document.getElementById('mockup-btn');
+      btn.disabled = true; btn.textContent = '✦ Generando mockup...'; btn.style.background = '#c4b5fd';
+      try {
+        const generated = await callClaude(MOCKUP_SYS, [{ role:'user', content:'Empresa/web: ' + desc }], 1000);
+        // Limpiar posibles bloques markdown que Claude añada
+        const clean = generated
+          .replace(/^```html\s*/i, '')
+          .replace(/^```\s*/i, '')
+          .replace(/```\s*$/i, '')
+          .trim();
+        // Usar Blob URL para evitar problemas de encoding en srcdoc
+        const blob = new Blob([clean], { type: 'text/html; charset=utf-8' });
+        const blobUrl = URL.createObjectURL(blob);
+        document.getElementById('mockup-widget').style.display = 'none';
+        const res = document.getElementById('mockup-result');
+        res.style.display = 'block';
+        res.innerHTML = '';
+        // Barra de browser
+        const browser = document.createElement('div');
+        browser.className = 'result-box';
+        browser.style.marginBottom = '8px';
+        browser.innerHTML =
+          '<div style="background:#f9fafb;padding:6px 12px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:7px">' +
+          '<div style="display:flex;gap:4px">' +
+          '<div style="width:8px;height:8px;border-radius:50%;background:#ff5f57"></div>' +
+          '<div style="width:8px;height:8px;border-radius:50%;background:#ffbd2e"></div>' +
+          '<div style="width:8px;height:8px;border-radius:50%;background:#28c840"></div>' +
+          '</div>' +
+          '<div style="flex:1;background:#fff;border-radius:4px;padding:2px 10px;font-size:10px;color:#9ca3af;border:1px solid #e5e7eb">🔒 tu-empresa.es · Mockup generado por IA</div>' +
+          '</div>';
+        const iframe = document.createElement('iframe');
+        iframe.src = blobUrl;
+        iframe.style.cssText = 'width:100%;height:280px;border:none;display:block';
+        iframe.title = 'Mockup generado';
+        browser.appendChild(iframe);
+        res.appendChild(browser);
+        const backBtn = document.createElement('button');
+        backBtn.className = 'btn-back';
+        backBtn.textContent = '← Generar otro';
+        backBtn.onclick = resetMockup;
+        res.appendChild(backBtn);
+        triggerPopup('mockup');
+      } catch(e) {
+        console.error('Mockup error:', e);
+        btn.disabled = false; btn.textContent = '🌐 Generar mockup web al instante'; btn.style.background = '#7c6eec';
+      }
+    }
+    function resetMockup() {
+      document.getElementById('mockup-widget').style.display = 'block';
+      document.getElementById('mockup-result').style.display = 'none';
+      const btn = document.getElementById('mockup-btn');
+      btn.disabled = false; btn.textContent = '🌐 Generar mockup web al instante'; btn.style.background = '#7c6eec';
+    }
+  </script>
+
+  <!-- POPUP ÚNICO -->
+  <div id="pop-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:9999;align-items:center;justify-content:center;padding:20px">
+    <div style="background:#fff;border-radius:16px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.18);animation:slideUpPop .3s ease">
+      <style>@keyframes slideUpPop{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}</style>
+      <div style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);padding:22px 24px 18px;position:relative">
+        <button onclick="closePopup()" style="position:absolute;top:13px;right:14px;background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;line-height:1">✕</button>
+        <div id="pop-icon" style="font-size:30px;margin-bottom:8px"></div>
+        <span id="pop-gift" style="display:inline-block;background:#f0fdf4;border:1px solid #bbf7d0;padding:3px 10px;border-radius:100px;font-size:11px;color:#16a34a;font-weight:700;margin-bottom:10px"></span>
+        <h3 id="pop-title" style="font-size:16px;font-weight:800;color:#111827;margin-bottom:5px;line-height:1.3"></h3>
+        <p id="pop-desc" style="font-size:12px;color:#6b7280;line-height:1.6;margin:0"></p>
+      </div>
+      <div id="pop-form" style="padding:20px 24px 24px">
+        <label style="font-size:12px;font-weight:700;color:#374151;display:block;margin-bottom:5px">Tu nombre</label>
+        <input type="text" id="pop-name" placeholder="Ej: María García" style="width:100%;border:1.5px solid #e5e7eb;border-radius:8px;padding:10px 13px;font-size:13px;color:#111827;outline:none;margin-bottom:13px;font-family:inherit;box-sizing:border-box" onfocus="this.style.borderColor='#7c6eec'" onblur="this.style.borderColor='#e5e7eb'">
+        <label style="font-size:12px;font-weight:700;color:#374151;display:block;margin-bottom:5px">Tu email</label>
+        <input type="email" id="pop-email" placeholder="maria@tuempresa.com" style="width:100%;border:1.5px solid #e5e7eb;border-radius:8px;padding:10px 13px;font-size:13px;color:#111827;outline:none;margin-bottom:16px;font-family:inherit;box-sizing:border-box" onfocus="this.style.borderColor='#7c6eec'" onblur="this.style.borderColor='#e5e7eb'">
+        <button id="pop-cta" onclick="submitPopup()" style="width:100%;background:#7c6eec;color:#fff;border:none;padding:13px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit"></button>
+        <p style="font-size:11px;color:#9ca3af;text-align:center;margin-top:10px">Sin compromisos · Respondemos en menos de 24h</p>
+      </div>
+      <div id="pop-success" style="display:none;padding:40px 24px;text-align:center">
+        <div style="font-size:48px;margin-bottom:14px">🎉</div>
+        <h3 id="pop-thanks" style="font-size:17px;font-weight:800;color:#111827;margin-bottom:8px"></h3>
+        <p style="font-size:13px;color:#6b7280;line-height:1.7">En menos de 24h te contactamos. ¡Revisa tu email!</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
