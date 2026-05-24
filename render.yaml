@@ -1,0 +1,13 @@
+services:
+  - type: web
+    env: static
+    name: marirrodriga-ia
+    rootDir: fronted
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    branch: develop
+    pullRequestPreviewsEnabled: true
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
