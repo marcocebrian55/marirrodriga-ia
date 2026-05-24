@@ -33,6 +33,9 @@ export default function App() {
 
   return (
     <>
+      <div className="glow-bg glow-bg-1" />
+      <div className="glow-bg glow-bg-2" />
+      <div className="grid-overlay" />
       <CursorEffect />
       <Nav page={page} onNavigate={navigate} />
       {page === 'home'    && <HomePage onNavigate={navigate} />}
