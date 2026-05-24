@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marirrodriga.IA — Automatización · Desarrollo Web · Inteligencia Artificial</title>
+  <meta name="description" content="Hacemos que tu empresa trabaje sola. De verdad. Automatizamos, construimos y conectamos inteligencia artificial a tu negocio." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <svg style="display:none">
+    <symbol id="logo-icon" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="28" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.35"/>
+      <circle cx="32" cy="32" r="18" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.5"/>
+      <circle cx="32" cy="32" r="9"  fill="none" stroke="#7c6eec" stroke-width="1.5"/>
+      <line x1="32" y1="32" x2="32" y2="25" stroke="#7c6eec" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="32" y1="32" x2="37" y2="35" stroke="#7c6eec" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="32" cy="32" r="1.5" fill="#7c6eec"/>
+      <line x1="32" y1="4"  x2="32" y2="14" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <line x1="32" y1="50" x2="32" y2="60" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <line x1="4"  y1="32" x2="14" y2="32" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <line x1="50" y1="32" x2="60" y2="32" stroke="#7c6eec" stroke-width="0.8" opacity="0.3"/>
+      <circle cx="32" cy="4"  r="3.5" fill="#7c6eec" opacity="0.8"/>
+      <circle cx="56" cy="20" r="2.5" fill="#7c6eec" opacity="0.6"/>
+      <circle cx="56" cy="44" r="2"   fill="#7c6eec" opacity="0.5"/>
+      <circle cx="8"  cy="44" r="2.5" fill="#7c6eec" opacity="0.6"/>
+      <circle cx="14" cy="16" r="2"   fill="#7c6eec" opacity="0.5"/>
+      <path d="M4 32 Q10 26 16 32 Q22 38 28 32 Q34 26 40 32 Q46 38 52 32 Q58 26 60 32" fill="none" stroke="#7c6eec" stroke-width="1" opacity="0.4"/>
+    </symbol>
+  </svg>
+
+  <nav>
+    <a class="logo-wrap" href="#" onclick="sp('home');return false;">
+      <svg class="logo-svg"><use href="#logo-icon"/></svg>
+      <div class="logo-text">Marirrodriga<b>.IA</b></div>
+    </a>
+    <div class="nl">
+      <a class="on" id="nh" onclick="sp('home')">Inicio</a>
+      <a id="ns" onclick="sp('svcs')">Servicios</a>
+      <a href="#contacto">Blog</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <button class="nb" onclick="sp('svcs')">Ver servicios →</button>
+  </nav>
+
+  <!-- HOME -->
+  <div id="page-home" class="page active">
+    <div class="hero">
+      <div class="hgrid"></div>
+      <div class="hglow"></div>
+      <div class="nodes" id="nd"></div>
+      <div class="badge"><div class="bdot"></div>Desarrollo web · Automatización · Inteligencia Artificial</div>
+      <h1>Hacemos que tu empresa<br>trabaje sola. <em>De verdad.</em></h1>
+      <p class="sub">Automatizamos, construimos y conectamos inteligencia artificial a tu negocio. Sin intermediarios, sin estructuras infladas y sin los precios de las grandes consultoras.</p>
+      <div class="hbtns">
+        <button class="hb1" onclick="sp('svcs')">Explorar servicios →</button>
+        <button class="hb2" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Solicitar consulta gratuita</button>
+      </div>
+      <div class="hstats">
+        <div class="hs"><div class="hn"><b>−</b>80<b>%</b></div><div class="hl">Coste vs grandes agencias</div></div>
+        <div class="hs"><div class="hn"><b>&lt;</b>72<b>h</b></div><div class="hl">Primera automatización activa</div></div>
+        <div class="hs"><div class="hn">24<b>/7</b></div><div class="hl">Sistemas sin intervención humana</div></div>
+        <div class="hs"><div class="hn"><b>0</b></div><div class="hl">Intermediarios en el proceso</div></div>
+      </div>
+    </div>
+
+    <section>
+      <div class="stitle center">
+        <div class="slbl">Caso real</div>
+        <h2>Un ejemplo vale más que mil promesas</h2>
+        <p>Antes de contarte cómo trabajamos, te mostramos qué hemos hecho. Esto no es un caso inventado.</p>
+      </div>
+      <div class="case">
+        <div class="case-top">
+          <div class="case-ico">🏃</div>
+          <div>
+            <h3>Fisioterapia a domicilio · Profesional independiente</h3>
+            <p>Negocio unipersonal, sin equipo, sin recepción — toda la gestión recaía sobre una sola persona</p>
+          </div>
+        </div>
+        <div class="case-cols">
+          <div class="ccol">
+            <h4>El problema</h4>
+            <p>Cada llamada mientras atendía a un paciente era un cliente perdido. <em>50€ por sesión</em> que se escapaban, más la posibilidad de fidelizarlo durante meses. Un coste de oportunidad silencioso y constante.</p>
+          </div>
+          <div class="ccol">
+            <h4>La solución</h4>
+            <p>Chatbot IA en web y WhatsApp que <em>atiende al instante</em>, hace diagnóstico básico y <em>agenda citas automáticamente</em> sin que él tenga que intervenir.</p>
+          </div>
+          <div class="ccol">
+            <h4>El resultado</h4>
+            <div class="rpill">✓ 0 llamadas perdidas</div>
+            <p><em>Citas gestionadas 24/7</em>. El sistema atiende, agenda y confirma. Él solo trata pacientes. El coste de oportunidad: eliminado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center">
+        <div class="slbl">Proceso</div>
+        <h2>Sin reuniones infinitas. Sin promesas vacías.</h2>
+        <p>Del primer contacto a tu sistema en producción. Directo y sin burocracia.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="stepn">🎯<div class="stepnum">1</div></div><h3>Analizamos</h3><p>Identificamos tus costes de oportunidad y dónde está el mayor impacto posible.</p></div>
+        <div class="step"><div class="stepn">🏗️<div class="stepnum">2</div></div><h3>Diseñamos</h3><p>Construimos la solución exacta para ti. Sin plantillas genéricas.</p></div>
+        <div class="step"><div class="stepn">⚡<div class="stepnum">3</div></div><h3>Desplegamos</h3><p>Tu sistema activo en tiempo récord, sin interrumpir tu operativa.</p></div>
+        <div class="step"><div class="stepn">📈<div class="stepnum">4</div></div><h3>Evolucionamos</h3><p>Monitorizamos y mejoramos con datos reales de forma continua.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center">
+        <div class="slbl">Por qué elegirnos</div>
+        <h2>Misma tecnología que las grandes.<br>Sin sus precios ni sus tiempos.</h2>
+      </div>
+      <div class="whygrid">
+        <div class="wycard"><div class="wyico">👥</div><h3>Trato directo</h3><p>Hablas con quien construye tu sistema. Sin account managers ni capas innecesarias.</p></div>
+        <div class="wycard"><div class="wyico">⚡</div><h3>Velocidad real</h3><p>Lo que una agencia grande tarda en presupuestar, nosotros ya lo tenemos funcionando.</p></div>
+        <div class="wycard"><div class="wyico">💶</div><h3>Precio justo</h3><p>Sin estructuras corporativas en tu factura. Pagas el trabajo, no los despachos.</p></div>
+        <div class="wycard"><div class="wyico">🧩</div><h3>Todo integrado</h3><p>Web, IA, automatizaciones y publicidad con visión completa de tu negocio.</p></div>
+        <div class="wycard"><div class="wyico">📊</div><h3>Resultados medibles</h3><p>No vendemos horas. Vendemos impacto concreto desde el primer día.</p></div>
+        <div class="wycard"><div class="wyico">🔄</div><h3>Escala contigo</h3><p>Los sistemas crecen con tu empresa. Sin empezar de cero cada vez.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center">
+        <div class="slbl">Lo que dicen nuestros clientes</div>
+        <h2>Sin filtros</h2>
+      </div>
+      <div class="tst">
+        <div class="stars">★★★★★</div>
+        <blockquote>Estaba perdiendo clientes cada vez que cogía el teléfono en mitad de una sesión. Montaron el chatbot en dos días. Ahora agenda solo, confirma las citas y yo solo aparezco a trabajar. Es como tener un recepcionista que nunca se toma el día libre.</blockquote>
+        <div class="tauth">
+          <div class="tava">F</div>
+          <div>
+            <div class="taname">Francisco · Fisioterapeuta a domicilio</div>
+            <div class="taco">Cliente real · Islas Canarias</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stitle center">
+        <div class="slbl">El equipo</div>
+        <h2>Las personas detrás del sistema</h2>
+        <p>Un equipo técnico especializado. Cuando nos contratas, trabajas con quienes construyen.</p>
+      </div>
+      <div class="teamgrid">
+        <div class="tcard">
+          <div class="tav-big">MM</div>
+          <div class="tinfo">
+            <h3>Marco Marirrodriga</h3>
+            <div class="trole">Co-fundador · Full Stack Developer</div>
+            <div class="tdesc">Especializado en desarrollo web moderno e integración de sistemas. Construye las interfaces y arquitecturas que hacen posible cada automatización.</div>
+            <div class="ttags"><span class="tt">React / Next.js</span><span class="tt">Node.js</span><span class="tt">UI/UX</span><span class="tt">Integraciones API</span></div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tav-big">IM</div>
+          <div class="tinfo">
+            <h3>Ismael Marirrodriga</h3>
+            <div class="trole">Co-fundador · IA Engineer</div>
+            <div class="tdesc">Especializado en automatización de procesos e integración de IA. Diseña los sistemas que hacen que los negocios funcionen de forma autónoma.</div>
+            <div class="ttags"><span class="tt">Agentes IA</span><span class="tt">LLMs</span><span class="tt">Automatización</span><span class="tt">n8n · Make</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ctasec" id="contacto">
+      <h2>¿Cuánto te está costando<br>no estar <em>automatizado</em>?</h2>
+      <p>La consulta es gratuita. El diagnóstico es inmediato. La propuesta llega en menos de 24 horas.</p>
+      <button class="ctabig" onclick="sp('svcs')">Ver todos los servicios →</button>
+      <div class="ctasub">Sin compromiso · Primera consulta gratuita · Respuesta en menos de 24h</div>
+    </div>
+  </div>
+
+  <!-- SERVICIOS -->
+  <div id="page-svcs" class="page">
+    <div class="svcs-hero">
+      <div class="svc-note"><div class="bdot"></div>IA real · Prueba cada demo ahora mismo</div>
+      <h1>Servicios que se venden<br><em>a través de sí mismos</em></h1>
+      <p>No te explicamos lo que hacemos. Pruébalo aquí mismo, con IA de verdad. El popup para dejarnos tu contacto aparece solo después de que pruebes cada servicio.</p>
+    </div>
+
+    <section class="section--services">
+      <div class="sgrid">
+
+        <!-- CHATBOT -->
+        <div class="sc">
+          <div class="sch"><div class="sci">🤖</div><div class="scinfo"><h3>Chatbot empresarial IA</h3><p>IA real de captación. Pide el nombre de tu empresa y encauza hacia una cita.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="chatbox" class="chatbox"></div>
+            <div class="cinput">
+              <input id="ci" placeholder="Escribe tu mensaje..." onkeydown="if(event.key==='Enter')sendChat()"/>
+              <button onclick="sendChat()">Enviar</button>
+            </div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres este chatbot para tu negocio?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('chatbot', true)">📩 Prueba gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="sc">
+          <div class="sch"><div class="sci">📧</div><div class="scinfo"><h3>Generador de emails de captación</h3><p>Describe tu empresa y la IA redacta un email profesional al instante.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="email-widget" class="widget-body">
+              <p class="widget-desc">Describe tu empresa y generamos un email de captación de leads profesional.</p>
+              <textarea id="email-desc" class="widget-textarea" rows="4" placeholder="Ej: Clínica dental en Madrid especializada en ortodoncia invisible para adultos…"></textarea>
+              <button id="email-btn" class="widget-action-btn" onclick="genEmail()">✨ Generar email</button>
+            </div>
+            <div id="email-result" class="widget-body" style="display:none"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres emails automáticos para tu empresa?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('email', true)">📩 Prueba gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FACTURAS -->
+        <div class="sc">
+          <div class="sch"><div class="sci">🧾</div><div class="scinfo"><h3>Factura automática con IA</h3><p>Rellena los datos y la IA genera tu factura profesional al instante.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="invoice-widget" class="widget-body">
+              <div class="widget-field-grid">
+                <div>
+                  <label class="widget-label">Cliente *</label>
+                  <input id="inv-client" class="widget-input" placeholder="Nombre del cliente">
+                </div>
+                <div>
+                  <label class="widget-label">NIF</label>
+                  <input id="inv-nif" class="widget-input" placeholder="12345678A">
+                </div>
+              </div>
+              <div id="inv-lines">
+                <label class="inv-lines-label">Servicios</label>
+                <div class="inv-line">
+                  <input placeholder="Descripción">
+                  <input type="number" placeholder="Ud." min="1" value="1">
+                  <input placeholder="€/ud">
+                </div>
+              </div>
+              <button class="inv-add-btn" onclick="addInvLine()">+ Añadir línea</button>
+              <button id="invoice-btn" class="widget-action-btn" onclick="genInvoice()">🧾 Generar factura</button>
+            </div>
+            <div id="invoice-result" class="widget-body" style="display:none"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres facturación automática para tu negocio?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('invoice', true)">📩 Prueba gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REDES SOCIALES -->
+        <div class="sc">
+          <div class="sch"><div class="sci">📱</div><div class="scinfo"><h3>Contenido para redes sociales</h3><p>Describe tu empresa y la IA genera el copy del post + prompt para la imagen.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="social-widget" class="widget-body">
+              <div class="soc-tabs">
+                <button class="soc-tab on" onclick="setSocPlat(this,'instagram')">📸 Instagram</button>
+                <button class="soc-tab" onclick="setSocPlat(this,'tiktok')">🎵 TikTok</button>
+                <button class="soc-tab" onclick="setSocPlat(this,'linkedin')">💼 LinkedIn</button>
+              </div>
+              <input type="hidden" id="social-platform" value="instagram">
+              <textarea id="social-desc" class="widget-textarea" rows="4" placeholder="Ej: Restaurante italiano en Valencia, pasta fresca artesanal, ambiente familiar…"></textarea>
+              <button id="social-btn" class="widget-action-btn" onclick="genSocial()">✨ Generar post + prompt imagen</button>
+            </div>
+            <div id="social-result" class="widget-body" style="display:none"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres 10 posts reales para tu empresa esta semana?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('social', true)">📩 10 posts gratis →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MOCKUP WEB -->
+        <div class="sc sc--wide">
+          <div class="sch"><div class="sci">🌐</div><div class="scinfo"><h3>Generador de mockups web con IA</h3><p>Describe tu empresa o web actual y la IA genera un mockup HTML moderno al instante. Para autónomos, pymes y grandes empresas.</p></div></div>
+          <div class="scdemo">
+            <div class="sdtop"><div class="sdlive"></div><span>IA en vivo · Claude</span></div>
+            <div id="mockup-widget" class="widget-body">
+              <p class="widget-desc">Describe tu empresa o tu web actual. La IA genera un diseño web moderno personalizado.</p>
+              <textarea id="mockup-desc" class="widget-textarea" rows="4" placeholder="Ej: Tengo una academia de inglés en Sevilla para adultos profesionales. Mi web es muy anticuada, fondo gris, letra pequeña. Quiero algo moderno y que convierta..."></textarea>
+              <button id="mockup-btn" class="widget-action-btn" onclick="genMockup()">🌐 Generar mockup web al instante</button>
+            </div>
+            <div id="mockup-result" class="widget-body" style="display:none"></div>
+            <div class="widget-cta-bar">
+              <span>¿Quieres un análisis gratuito de tu web actual?</span>
+              <button class="widget-cta-btn" onclick="triggerPopup('mockup', true)">📩 Análisis gratis →</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="ctasec">
+      <h2>¿Qué proceso quieres<br><em>eliminar primero?</em></h2>
+      <p>Cuéntanoslo. En menos de 24h tienes una propuesta concreta y un precio claro.</p>
+      <button class="ctabig">Hablar con el equipo →</button>
+      <div class="ctasub">Sin compromiso · Sin intermediarios · Respuesta garantizada en menos de 24h</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <svg class="logo-svg"><use href="#logo-icon"/></svg>
+      <div>
+        <div class="footer-logo-text">Marirrodriga<b>.IA</b></div>
+        <div class="footer-tagline">Automatizamos lo que te roba tiempo.</div>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a onclick="sp('home')">Inicio</a>
+      <a onclick="sp('svcs')">Servicios</a>
+      <a>Blog</a>
+      <a>Contacto</a>
+    </div>
+    <div class="footer-copy">© 2025 Marirrodriga.IA · Todos los derechos reservados</div>
+  </footer>
+
+  <!-- POPUP -->
+  <div id="pop-overlay" class="popup">
+    <div class="popup__box">
+      <div class="popup__header">
+        <button class="popup__close" onclick="closePopup()">✕</button>
+        <span id="pop-icon" class="popup__icon"></span>
+        <span id="pop-gift" class="popup__gift"></span>
+        <h3 id="pop-title" class="popup__title"></h3>
+        <p id="pop-desc" class="popup__desc"></p>
+      </div>
+      <div id="pop-form" class="popup__body">
+        <label class="popup__label">Tu nombre</label>
+        <input type="text" id="pop-name" class="popup__input" placeholder="Ej: María García">
+        <label class="popup__label">Tu email</label>
+        <input type="email" id="pop-email" class="popup__input" placeholder="maria@tuempresa.com">
+        <button id="pop-cta" class="popup__submit" onclick="submitPopup()"></button>
+        <p class="popup__hint">Sin compromisos · Respondemos en menos de 24h</p>
+      </div>
+      <div id="pop-success" class="popup__success">
+        <span class="popup__success-icon">🎉</span>
+        <h3 id="pop-thanks" class="popup__success-title"></h3>
+        <p class="popup__success-text">En menos de 24h te contactamos. ¡Revisa tu email!</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── FLOATING NODES ───────────────────────────────────────────
+    const nd = document.getElementById('nd');
+    for (let i = 0; i < 14; i++) {
+      const n = document.createElement('div');
+      const s = 2 + Math.random() * 5;
+      n.className = 'node';
+      n.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${3+Math.random()*5}s;animation-delay:${Math.random()*4}s`;
+      nd.appendChild(n);
+    }
+
+    // ── PAGE NAVIGATION ──────────────────────────────────────────
+    function sp(p) {
+      document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+      document.getElementById('page-' + p).classList.add('active');
+      document.getElementById('nh').classList.toggle('on', p === 'home');
+      document.getElementById('ns').classList.toggle('on', p === 'svcs');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── CLAUDE API ───────────────────────────────────────────────
+    async function callClaude(system, messages, maxTokens) {
+      const isNetlify = !window.location.hostname.match(/localhost|127\.0\.0\.1/);
+      const endpoint = isNetlify ? '/.netlify/functions/claude' : 'https://api.anthropic.com/v1/messages';
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: maxTokens || 800, system, messages }),
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      return data.text || data.content[0].text;
+    }
+
+    // ── POPUP ────────────────────────────────────────────────────
+    const POPUPS = {
+      chatbot: { icon:'🤖', gift:'🎁 Demo configurada gratis',   title:'¿Quieres este chatbot para tu empresa?',  desc:'Lo configuramos con tu información real. Listo en 48h.',                               cta:'Quiero el chatbot →' },
+      email:   { icon:'📧', gift:'🎁 Email personalizado gratis', title:'¿Emails automáticos para tu negocio?',    desc:'Te generamos una secuencia adaptada a tu empresa.',                                    cta:'Quiero mis emails →' },
+      invoice: { icon:'🧾', gift:'🎁 Sistema configurado gratis', title:'¿Quieres facturación automática?',        desc:'Lo montamos con tus datos reales en menos de 24h.',                                    cta:'Quiero el sistema →' },
+      social:  { icon:'📱', gift:'🎁 10 posts gratis',            title:'¿10 posts reales para tu empresa?',       desc:'Listos para publicar en Instagram, TikTok o LinkedIn esta semana.',                     cta:'Quiero mis 10 posts →' },
+      mockup:  { icon:'🌐', gift:'🎁 Análisis web gratuito',      title:'¿Análisis completo de tu web?',           desc:'Te decimos las 3 mejoras que más conversión generarían ahora mismo.',                   cta:'Quiero el análisis →' },
+    };
+    const _interacted = {};
+    let _curPopup = null;
+
+    function triggerPopup(service, force) {
+      if (_interacted[service] && !force) return;
+      _interacted[service] = true;
+      _curPopup = service;
+      const p = POPUPS[service];
+      document.getElementById('pop-icon').textContent  = p.icon;
+      document.getElementById('pop-gift').textContent  = p.gift;
+      document.getElementById('pop-title').textContent = p.title;
+      document.getElementById('pop-desc').textContent  = p.desc;
+      document.getElementById('pop-cta').textContent   = p.cta;
+      document.getElementById('pop-form').style.display    = 'block';
+      document.getElementById('pop-success').style.display = 'none';
+      document.getElementById('pop-name').value  = '';
+      document.getElementById('pop-email').value = '';
+      setTimeout(() => document.getElementById('pop-overlay').classList.add('active'), 700);
+    }
+    function closePopup() {
+      document.getElementById('pop-overlay').classList.remove('active');
+    }
+    function submitPopup() {
+      const name  = document.getElementById('pop-name').value.trim();
+      const email = document.getElementById('pop-email').value.trim();
+      if (!name || !email) { alert('Por favor rellena tu nombre y email.'); return; }
+      document.getElementById('pop-form').style.display    = 'none';
+      document.getElementById('pop-success').style.display = 'block';
+      document.getElementById('pop-thanks').textContent    = '¡Perfecto, ' + name + '!';
+      // TODO: fetch('TU_WEBHOOK_N8N', { method:'POST', headers:{'Content-Type':'application/json'},
+      //   body: JSON.stringify({ name, email, service: _curPopup, timestamp: new Date().toISOString() }) });
+    }
+    document.getElementById('pop-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closePopup();
+    });
+
+    // ── CHATBOT ──────────────────────────────────────────────────
+    const CHAT_SYS = `Eres el asistente de captación de Marirrodriga.IA, agencia de automatización con IA para pequeñas empresas españolas.
+Tu misión: demostrar cómo un chatbot de IA gestiona la captación de clientes de forma profesional.
+Flujo: 1) Pide nombre de empresa y sector. 2) Identifica el mayor dolor operativo. 3) Cuantifica el problema. 4) Presenta la solución de Marirrodriga.IA. 5) Propón demo de 20 minutos.
+Reglas: máximo 2-3 frases por respuesta. Cercano y profesional. Siempre en español. 1 emoji máximo por respuesta.`;
+    let chatHistory  = [];
+    let chatExchanges = 0;
+
+    function addChatMsg(text, role) {
+      const box = document.getElementById('chatbox');
+      const d   = document.createElement('div');
+      d.className = `chat-msg ${role}`;
+      d.textContent = text;
+      box.appendChild(d);
+      box.scrollTop = box.scrollHeight;
+    }
+    setTimeout(() => addChatMsg('¡Hola! Soy el asistente de captación de Marirrodriga.IA 👋 ¿Cuál es el nombre de tu empresa y a qué os dedicáis?', 'bot'), 400);
+
+    async function sendChat() {
+      const ci   = document.getElementById('ci');
+      const text = ci.value.trim();
+      if (!text) return;
+      ci.value = '';
+      addChatMsg(text, 'user');
+      chatHistory.push({ role: 'user', content: text });
+      const box    = document.getElementById('chatbox');
+      const typing = document.createElement('div');
+      typing.className  = 'chat-typing';
+      typing.textContent = '✦ Escribiendo...';
+      box.appendChild(typing);
+      box.scrollTop = box.scrollHeight;
+      try {
+        const msgs  = [{ role:'assistant', content:'¡Hola! Soy el asistente de captación de Marirrodriga.IA 👋 ¿Cuál es el nombre de tu empresa y a qué os dedicáis?' }, ...chatHistory];
+        const reply = await callClaude(CHAT_SYS, msgs, 400);
+        typing.remove();
+        addChatMsg(reply, 'bot');
+        chatHistory.push({ role: 'assistant', content: reply });
+        chatExchanges++;
+        if (chatExchanges >= 2) triggerPopup('chatbot');
+      } catch(e) {
+        typing.remove();
+        addChatMsg('Error de conexión. Inténtalo de nuevo.', 'bot');
+      }
+    }
+
+    // ── EMAIL ────────────────────────────────────────────────────
+    const EMAIL_SYS = `Eres un experto en email marketing para pymes españolas. Genera un email profesional de captación de leads basado en la descripción de la empresa.
+Formato EXACTO:
+ASUNTO: [asunto - máx 60 chars]
+
+Hola [Nombre],
+
+[párrafo 1: conecta con el dolor]
+
+[párrafo 2: propuesta de valor]
+
+[CTA directo]
+
+[Firma]
+
+P.D.: [urgencia]
+
+Solo el email. Sin explicaciones.`;
+
+    async function genEmail() {
+      const desc = document.getElementById('email-desc').value.trim();
+      if (!desc) return;
+      const btn  = document.getElementById('email-btn');
+      btn.disabled    = true;
+      btn.textContent = '✦ Generando email...';
+      try {
+        const text  = await callClaude(EMAIL_SYS, [{ role:'user', content:'Mi empresa: ' + desc }], 700);
+        const lines = text.split('\n');
+        const subj  = (lines.find(l => l.startsWith('ASUNTO:')) || '').replace('ASUNTO:', '').trim();
+        const body  = lines.filter(l => !l.startsWith('ASUNTO:')).join('\n').trim();
+        document.getElementById('email-widget').style.display = 'none';
+        const res = document.getElementById('email-result');
+        res.style.display = 'block';
+        res.innerHTML = `
+          <div class="result-box">
+            <div class="result-hdr">📧 Email generado por IA</div>
+            <div class="result-meta">
+              <div class="result-meta-row"><span class="result-meta-label">De:</span> tu@empresa.com</div>
+              <div class="result-meta-row"><span class="result-meta-label">Para:</span> prospecto@cliente.com</div>
+              <div class="result-meta-row"><span class="result-meta-label">Asunto:</span> ${subj}</div>
+            </div>
+            <div class="result-body result-body--scroll result-body--pre">${body}</div>
+          </div>
+          <button class="btn-back" onclick="resetEmail()">← Nueva empresa</button>
+        `;
+        triggerPopup('email');
+      } catch(e) {
+        btn.disabled    = false;
+        btn.textContent = '✨ Generar email';
+      }
+    }
+    function resetEmail() {
+      document.getElementById('email-widget').style.display = 'block';
+      document.getElementById('email-result').style.display = 'none';
+      const btn = document.getElementById('email-btn');
+      btn.disabled    = false;
+      btn.textContent = '✨ Generar email';
+    }
+
+    // ── FACTURAS ─────────────────────────────────────────────────
+    const INVOICE_SYS = `Eres un sistema de generación de facturas profesionales españolas. Genera una factura en HTML con estilos inline basada en los datos. Incluye: número FAC-2026-XXX, fecha, emisor Marirrodriga.IA, datos cliente, tabla servicios, subtotal, IVA 21% y total. Diseño limpio y profesional. DEVUELVE SOLO EL HTML sin explicaciones ni markdown.`;
+
+    function addInvLine() {
+      const container = document.getElementById('inv-lines');
+      const row       = document.createElement('div');
+      row.className   = 'inv-line';
+      row.innerHTML   = '<input placeholder="Descripción"><input type="number" placeholder="Ud." min="1" value="1"><input placeholder="€/ud">';
+      container.appendChild(row);
+    }
+
+    async function genInvoice() {
+      const client = document.getElementById('inv-client').value.trim();
+      if (!client) { alert('Añade el nombre del cliente'); return; }
+      const nif = document.getElementById('inv-nif').value.trim();
+      let services = '';
+      document.querySelectorAll('.inv-line').forEach(l => {
+        const inputs = l.querySelectorAll('input');
+        services += `- ${inputs[0].value||'Servicio'}: ${inputs[1].value||1} x ${inputs[2].value||0}€\n`;
+      });
+      const data = `Fecha: ${new Date().toLocaleDateString('es-ES')}\nCliente: ${client}${nif?' | NIF: '+nif:''}\nServicios:\n${services}`;
+      const btn  = document.getElementById('invoice-btn');
+      btn.disabled    = true;
+      btn.textContent = '✦ Generando factura...';
+      try {
+        const html  = await callClaude(INVOICE_SYS, [{ role:'user', content: data }], 1000);
+        const clean = html.replace(/```html\n?/g,'').replace(/```\n?/g,'').trim();
+        const enc   = clean.replace(/"/g,'&quot;');
+        document.getElementById('invoice-widget').style.display = 'none';
+        const res = document.getElementById('invoice-result');
+        res.style.display = 'block';
+        res.innerHTML = `
+          <div class="result-box">
+            <div class="result-hdr">🧾 Factura generada por IA</div>
+            <iframe class="invoice-frame" srcdoc="${enc}" title="Factura"></iframe>
+          </div>
+          <button class="btn-back" onclick="resetInvoice()">← Nueva factura</button>
+        `;
+        triggerPopup('invoice');
+      } catch(e) {
+        btn.disabled    = false;
+        btn.textContent = '🧾 Generar factura';
+      }
+    }
+    function resetInvoice() {
+      document.getElementById('invoice-widget').style.display = 'block';
+      document.getElementById('invoice-result').style.display = 'none';
+      const btn = document.getElementById('invoice-btn');
+      btn.disabled    = false;
+      btn.textContent = '🧾 Generar factura';
+    }
+
+    // ── REDES SOCIALES ───────────────────────────────────────────
+    const SOCIAL_SYS = `Eres un experto en contenido para redes sociales para empresas locales españolas. Genera contenido listo para publicar.
+Formato EXACTO:
+📝 COPY:
+[Hook potente. Cuerpo 3-4 líneas. CTA. 5-7 hashtags.]
+
+📸 PROMPT IMAGEN:
+[Prompt en inglés para Midjourney/DALL-E. Describe: sujeto, estilo, iluminación, composición. Máx 80 palabras.]
+
+📊 DATOS:
+Mejor horario: [día y hora]
+Formato: [Reel/Carrusel/Imagen]
+Alcance estimado: [rango]
+
+Solo esto.`;
+
+    function setSocPlat(btn, plat) {
+      document.querySelectorAll('.soc-tab').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById('social-platform').value = plat;
+    }
+
+    async function genSocial() {
+      const desc = document.getElementById('social-desc').value.trim();
+      const plat = document.getElementById('social-platform').value;
+      if (!desc) return;
+      const btn  = document.getElementById('social-btn');
+      btn.disabled    = true;
+      btn.textContent = '✦ Generando post...';
+      try {
+        const text  = await callClaude(SOCIAL_SYS, [{ role:'user', content:`Empresa: ${desc}\nPlataforma: ${plat}` }], 700);
+        const copyM = text.match(/📝 COPY:\n([\s\S]*?)(?=📸|$)/);
+        const imgM  = text.match(/📸 PROMPT IMAGEN:\n([\s\S]*?)(?=📊|$)/);
+        const statM = text.match(/📊 DATOS:\n([\s\S]*?)$/);
+        const copy  = copyM ? copyM[1].trim() : text;
+        const img   = imgM  ? imgM[1].trim()  : '';
+        const stat  = statM ? statM[1].trim() : '';
+        document.getElementById('social-widget').style.display = 'none';
+        const res = document.getElementById('social-result');
+        res.style.display = 'block';
+        res.innerHTML = `
+          <div class="result-stack">
+            <div class="result-box">
+              <div class="result-hdr">📝 Copy del post</div>
+              <div class="result-body result-body--scroll result-body--pre">${copy}</div>
+            </div>
+            ${img  ? `<div class="result-box"><div class="result-hdr">📸 Prompt imagen · Midjourney / DALL·E</div><div class="result-body result-body--italic">${img}</div></div>` : ''}
+            ${stat ? `<div class="result-stats"><b class="result-stats-label">📊 Datos</b>${stat}</div>` : ''}
+            <button class="btn-back" onclick="resetSocial()">← Nueva empresa</button>
+          </div>
+        `;
+        triggerPopup('social');
+      } catch(e) {
+        btn.disabled    = false;
+        btn.textContent = '✨ Generar post + prompt imagen';
+      }
+    }
+    function resetSocial() {
+      document.getElementById('social-widget').style.display = 'block';
+      document.getElementById('social-result').style.display = 'none';
+      const btn = document.getElementById('social-btn');
+      btn.disabled    = false;
+      btn.textContent = '✨ Generar post + prompt imagen';
+    }
+
+    // ── MOCKUP ───────────────────────────────────────────────────
+    const MOCKUP_SYS = `Eres un experto en diseño web moderno. El usuario describirá su empresa o web actual. Genera el HTML completo de una landing page moderna para esa empresa. Requisitos: HTML con CSS en <style>, diseño moderno (hero + 3 servicios en cards + CTA), paleta coherente con el sector, emojis como iconos, en español, sin JavaScript. DEVUELVE SOLO EL HTML empezando por <!DOCTYPE html>. Sin markdown ni explicaciones.`;
+
+    async function genMockup() {
+      const desc = document.getElementById('mockup-desc').value.trim();
+      if (!desc) return;
+      const btn  = document.getElementById('mockup-btn');
+      btn.disabled    = true;
+      btn.textContent = '✦ Generando mockup...';
+      try {
+        const generated = await callClaude(MOCKUP_SYS, [{ role:'user', content:'Empresa/web: ' + desc }], 1000);
+        const clean     = generated.replace(/^```html\s*/i,'').replace(/^```\s*/i,'').replace(/```\s*$/i,'').trim();
+        const blobUrl   = URL.createObjectURL(new Blob([clean], { type: 'text/html; charset=utf-8' }));
+        document.getElementById('mockup-widget').style.display = 'none';
+        const res = document.getElementById('mockup-result');
+        res.style.display = 'block';
+        res.innerHTML = `
+          <div class="result-stack">
+            <div class="result-box">
+              <div class="browser-bar">
+                <div class="browser-dots">
+                  <div class="browser-dot browser-dot--r"></div>
+                  <div class="browser-dot browser-dot--y"></div>
+                  <div class="browser-dot browser-dot--g"></div>
+                </div>
+                <div class="browser-address">🔒 tu-empresa.es · Mockup generado por IA</div>
+              </div>
+              <iframe class="mockup-frame" src="${blobUrl}" title="Mockup generado"></iframe>
+            </div>
+            <button class="btn-back" onclick="resetMockup()">← Generar otro</button>
+          </div>
+        `;
+        triggerPopup('mockup');
+      } catch(e) {
+        btn.disabled    = false;
+        btn.textContent = '🌐 Generar mockup web al instante';
+      }
+    }
+    function resetMockup() {
+      document.getElementById('mockup-widget').style.display = 'block';
+      document.getElementById('mockup-result').style.display = 'none';
+      const btn = document.getElementById('mockup-btn');
+      btn.disabled    = false;
+      btn.textContent = '🌐 Generar mockup web al instante';
+    }
+  </script>
+
+</body>
+</html>
